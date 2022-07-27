@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import HomeMap from 'src/components/HomeMap'
 import VendorNav from '../components/VendorNav'
 
 function VendorDash() {
@@ -14,7 +15,11 @@ function VendorDash() {
     }
   }, [user, navigate])
 
-  return <></>
+  return (
+    <>
+      <HomeMap />
+    </>
+  )
 }
 
 export default VendorDash

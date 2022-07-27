@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import HomeMap from 'src/components/HomeMap'
+import HomeMap from '../components/HomeMap'
 import VendorNav from '../components/VendorNav'
 
 function VendorDash() {

@@ -1,8 +1,9 @@
+import React from 'react'
+
+import SearchBar from '../components/SearchBar'
+
 function About() {
-  return (
-    // TODO: Edit About page
-    <div>About</div>
-  )
+  return <div></div>
 }
 
 export default About

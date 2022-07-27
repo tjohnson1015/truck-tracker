@@ -5,13 +5,13 @@ const models = require('../models')
 
 // GET /api/v1/users/register
 router.post('/register', async (req, res) => {
-  const { email, password } = req.body
+  const { email, password, type } = req.body
   // if required fields missing, send error
-  if (!email || !password) {
+  if (!email || !password || !type) {
     return res.status(400).json({ error: 'missing email and/or password' })
   }
   // create new user in database and send success message
-  const user = await models.User.create({ email, password })
+  const user = await models.User.create({ email, password, type })
   res.json({ success: 'registered successfully' })
 })
 
@@ -42,6 +42,20 @@ router.post('/login', async (req, res) => {
 router.get('/logout', async (req, res) => {
   req.session.user = null
   res.json({ success: 'logged out successfully' })
+})
+
+router.get('/current', (req, res) => {
+  if (!req.session.user) {
+    res.json()
+    return
+  }
+  res.json({
+    id: req.session.user.id,
+    email: req.session.user.email,
+    type: req.session.user.type,
+    createdAt: req.session.user.createdAt,
+    updatedAt: req.session.user.updatedAt,
+  })
 })
 
 module.exports = router

@@ -1,7 +1,12 @@
+import React from 'react'
+import SearchBar from '../components/SearchBar'
+import HomeMap from '../components/HomeMap'
+
 function Home() {
   return (
-    // TODO: Make Homepage
-    <div>Home Page</div>
+    <div>
+      <HomeMap />
+    </div>
   )
 }
 

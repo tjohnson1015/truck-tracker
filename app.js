@@ -9,6 +9,9 @@ const serialize = require('./middleware/serialize')
 // router imports
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
+const schedulesRouter = require('./routes/schedules')
+const detailsRouter = require('./routes/details')
+const favoritesRouter = require('./routes/favorites')
 
 // configure express app
 const app = express()
@@ -37,6 +40,9 @@ app.use(express.static(path.join(__dirname, 'client/build')))
 // api routes
 app.use('/api/v1', indexRouter)
 app.use('/api/v1/users', usersRouter)
+app.use('/api/v1/schedules', schedulesRouter)
+app.use('/api/v1/details', detailsRouter)
+app.use('/api/v1/favorites', favoritesRouter)
 
 // redirect all other routes to react client so that react-router can handle them
 app.use('*', (req, res) => {

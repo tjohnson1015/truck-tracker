@@ -10,12 +10,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.hasMany(models.Schedule)
+      User.hasMany(models.Favorite)
+      User.hasOne(models.Detail)
     }
   }
   User.init(
     {
       email: DataTypes.STRING,
       password: DataTypes.STRING,
+      type: DataTypes.STRING,
     },
     {
       sequelize,

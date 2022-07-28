@@ -35,16 +35,19 @@ router.get('/', checkAuth, async (req, res) => {
 
 router.get('/public', async (req, res) => {
   // get all schedules for logged in user
+  const where = {
+    start: {
+      [Op.lte]: new Date(),
+    },
+  }
+  if (req.query.show !== 'all') {
+    where.end = {
+      [Op.gte]: new Date(),
+    }
+  }
   const schedules = await models.Schedule.findAll({
     order: [['createdAt', 'DESC']],
-    where: {
-      start: {
-        [Op.lte]: new Date(),
-      },
-      end: {
-        [Op.gte]: new Date(),
-      },
-    },
+    where,
     include: [
       {
         model: models.User,
@@ -59,46 +62,8 @@ router.get('/public', async (req, res) => {
       },
     ],
   })
-  const allSchedules = await models.Schedule.findAll({
-    order: [['createdAt', 'DESC']],
-    include: [
-      {
-        model: models.User,
-        attributes: {
-          exclude: ['password', 'email', 'id'],
-        },
-        include: [
-          {
-            model: models.Detail,
-          },
-        ],
-      },
-    ],
-  })
-  // send as json
-  res.json(schedules)
-})
-router.get('/allpublic', async (req, res) => {
-  // get all schedules for logged in user
 
-  const allSchedules = await models.Schedule.findAll({
-    order: [['createdAt', 'DESC']],
-    include: [
-      {
-        model: models.User,
-        attributes: {
-          exclude: ['password', 'email', 'id'],
-        },
-        include: [
-          {
-            model: models.Detail,
-          },
-        ],
-      },
-    ],
-  })
-  // send as json
-  res.json(allSchedules)
+  res.json(schedules)
 })
 
 // // DELETE /api/v1/todos/:id

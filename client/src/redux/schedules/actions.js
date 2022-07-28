@@ -36,7 +36,7 @@ export const getPublicSchedules = () => {
 
 export const getAllPublicSchedules = () => {
   return (dispatch) => {
-    fetch('/api/v1/schedules/allpublic')
+    fetch('/api/v1/schedules/public?show=all')
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {

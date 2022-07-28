@@ -35,16 +35,23 @@ router.get('/', checkAuth, async (req, res) => {
 
 router.get('/public', async (req, res) => {
   // get all schedules for logged in user
-  const where = {
-    start: {
+  const where = {}
+  if (req.query.show === 'all') {
+    where.start = {
+      [Op.gte]: new Date(),
+    }
+    where.end = {
+      [Op.gte]: new Date(),
+    }
+  } else {
+    where.start = {
       [Op.lte]: new Date(),
-    },
-  }
-  if (req.query.show !== 'all') {
+    }
     where.end = {
       [Op.gte]: new Date(),
     }
   }
+  console.log(req.query, where)
   const schedules = await models.Schedule.findAll({
     order: [['createdAt', 'DESC']],
     where,

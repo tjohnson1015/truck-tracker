@@ -78,8 +78,8 @@ function DetailCard({ detail }) {
             </Box>
 
             <Box mt="2">
-              <Text noOfLines={3} overflow="scroll">
-                {detail.description}
+              <Text noOfLines={2} overflow="scroll">
+                {detail.description} <br /> <br />
               </Text>
             </Box>
 

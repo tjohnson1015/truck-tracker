@@ -30,7 +30,7 @@ import {
 } from 'react-icons/io5'
 import { useDispatch, useSelector } from 'react-redux'
 import moment from 'moment'
-import { getPublicSchedules } from '../redux/schedules/actions'
+import { getAllPublicSchedules, getPublicSchedules } from '../redux/schedules/actions'
 import { toggleFavorite } from '../redux/favorites/actions'
 import Logo from '../images/logo.png'
 
@@ -43,7 +43,7 @@ function DetailCard({ detail }) {
   // @ts-ignore
   const { items, isLoading } = useSelector((state) => state.favorites)
   // @ts-ignore
-  const { publicItems, isLoading: scheduleIsLoading } = useSelector((state) => state.schedules)
+  const { publicItems, allPublicItems, isLoading: scheduleIsLoading } = useSelector((state) => state.schedules)
   const dispatch = useDispatch()
   function handleFavorite(id) {
     // @ts-ignore
@@ -53,8 +53,13 @@ function DetailCard({ detail }) {
     // @ts-ignore
     dispatch(getPublicSchedules())
   }, [dispatch])
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(getAllPublicSchedules())
+  }, [dispatch])
   const isFavorite = items.some((item) => detail.id === item.Detail.id)
   const schedules = publicItems.filter((item) => item.User.Detail.id === detail.id)
+  const allSchedules = allPublicItems.filter((item) => item.User.Detail.id === detail.id)
   return (
     <WrapItem>
       <Box m="7" bg="white" borderRadius="lg">
@@ -120,10 +125,10 @@ function DetailCard({ detail }) {
                 {overlay}
                 <ModalOverlay />
                 <ModalContent>
-                  <ModalHeader>{detail.name}</ModalHeader>
+                  <ModalHeader>{detail.name} | All Upcoming Events</ModalHeader>
                   <ModalCloseButton />
                   <ModalBody>
-                    {schedules.map((schedule) => (
+                    {allSchedules.map((schedule) => (
                       <div style={{ margin: '2px' }}>
                         <Text>
                           {moment(schedule.start).format('llll')} - {moment(schedule.end).format('LT')}
@@ -145,9 +150,24 @@ function DetailCard({ detail }) {
                 {overlay}
                 <ModalOverlay />
                 <ModalContent>
-                  <ModalHeader>{detail.name}</ModalHeader>
+                  <ModalHeader>{detail.name} | Live Events</ModalHeader>
                   <ModalCloseButton />
-                  <ModalBody>{detail.location}</ModalBody>
+                  <ModalBody>
+                    {schedules.length > 0 ? (
+                      schedules.map((schedule) => (
+                        <div>
+                          <h1>
+                            Open now at {schedule.location} from {moment(schedule.start).format('LT')} to{' '}
+                            {moment(schedule.end).format('LT')}
+                          </h1>
+                          <h2>{schedule.address}</h2>
+                          <h2>See you there!</h2>
+                        </div>
+                      ))
+                    ) : (
+                      <div>Not currently open. Try the schedule icon to see upcoming events!</div>
+                    )}
+                  </ModalBody>
 
                   <ModalFooter>
                     <Button onClick={onCloseLocation}>Close</Button>
@@ -161,7 +181,7 @@ function DetailCard({ detail }) {
                 <ModalContent>
                   <ModalHeader>{detail.name}</ModalHeader>
                   <ModalCloseButton />
-                  <ModalBody>In time, ther will be a menu here</ModalBody>
+                  <ModalBody>In time, there will be a menu here</ModalBody>
 
                   <ModalFooter>
                     <Button onClick={onCloseMenu}>Close</Button>

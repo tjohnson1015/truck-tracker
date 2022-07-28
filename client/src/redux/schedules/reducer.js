@@ -2,6 +2,7 @@ import {
   CREATE_SCHEDULE,
   DELETE_SCHEDULE,
   GET_SCHEDULES,
+  SET_ALL_PUBLIC_SCHEDULES,
   SET_ERROR,
   SET_PUBLIC_SCHEDULES,
   SET_SCHEDULES,
@@ -13,6 +14,7 @@ const defaultState = {
   isError: false,
   error: null,
   publicItems: [],
+  allPublicItems: [],
 }
 
 export const schedulesReducer = (state = defaultState, action) => {
@@ -34,6 +36,12 @@ export const schedulesReducer = (state = defaultState, action) => {
       return {
         ...state,
         publicItems: action.schedules,
+        isLoading: false,
+      }
+    case SET_ALL_PUBLIC_SCHEDULES:
+      return {
+        ...state,
+        allPublicItems: action.allSchedules,
         isLoading: false,
       }
     case SET_ERROR:

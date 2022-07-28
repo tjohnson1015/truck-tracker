@@ -5,6 +5,7 @@ import HomeMap from '../components/HomeMap'
 import VendorNav from '../components/VendorNav'
 
 function VendorDash() {
+  // @ts-ignore
   const { user, error, isLoading } = useSelector((state) => state.auth)
   const navigate = useNavigate()
   useEffect(() => {

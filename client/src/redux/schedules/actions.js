@@ -4,6 +4,7 @@ export const SET_ERROR = 'schedules/SET_ERROR'
 export const CREATE_SCHEDULE = 'schedules/CREATE_SCHEDULE'
 export const DELETE_SCHEDULE = 'schedules/DELETE_SCHEDULE'
 export const SET_PUBLIC_SCHEDULES = 'schedules/SET_PUBLIC_SCHEDULES'
+export const SET_ALL_PUBLIC_SCHEDULES = 'schedules/SET_ALL_PUBLIC_SCHEDULES'
 
 export const getSchedules = () => {
   return (dispatch) => {
@@ -28,6 +29,20 @@ export const getPublicSchedules = () => {
           dispatch({ type: SET_PUBLIC_SCHEDULES, schedules: [] })
         } else {
           dispatch({ type: SET_PUBLIC_SCHEDULES, schedules: data })
+        }
+      })
+  }
+}
+
+export const getAllPublicSchedules = () => {
+  return (dispatch) => {
+    fetch('/api/v1/schedules/allpublic')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          dispatch({ type: SET_ALL_PUBLIC_SCHEDULES, allSchedules: [] })
+        } else {
+          dispatch({ type: SET_ALL_PUBLIC_SCHEDULES, allSchedules: data })
         }
       })
   }

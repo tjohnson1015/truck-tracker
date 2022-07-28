@@ -5,7 +5,8 @@
   --color-b: rgb(255, 85, 90);
   min-height: 100vh;
   background: linear-gradient(to bottom right, var(--color-a), var(--color-b));
-  font-family: 'Merriweather', serif;;
+  font-family: 'Merriweather', serif;
+  color: rgb(68, 67, 67);
 }
 
 .form-vendor-truck {
